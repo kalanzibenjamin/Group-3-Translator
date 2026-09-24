@@ -1,5 +1,5 @@
-const FASIRI_TRANSLATE_URL = 'https://fasiri-bu9u.onrender.com/api/v1/translate';
-const FASIRI_API_KEY = 'fsri_062e57103d3e1e0c3840d90d5d74cc976c0af2b3';
+const SUNBIRD_TRANSLATE_URL = 'https://api.sunbird.ai/tasks/translate';
+const SUNBIRD_API_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzc2VzYWx1YWxsYW4wNiIsImFjY291bnRfdHlwZSI6IkZyZWUiLCJ0diI6MSwiZXhwIjo0OTQzODUwNjcxfQ.nx7ccFmwjK_cXUXTqIdXludtNiV_3dZ9b2pASzRNrnA';
 
 const form = document.querySelector('#translation-form');
 const sourceLanguage = document.querySelector('#source-lang');
@@ -15,14 +15,14 @@ document.querySelector('#swap-languages').addEventListener('click', () => {
 form.addEventListener('submit', async (event) => {
   event.preventDefault(); submit.disabled = true; submit.textContent = 'Translating…'; result.classList.remove('placeholder'); result.textContent = ''; details.textContent = '';
   try {
-    const response = await fetch(FASIRI_TRANSLATE_URL, { method: 'POST', headers: { Authorization: `Bearer ${FASIRI_API_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ text: document.querySelector('#source-text').value, source_lang: sourceLanguage.value, target_lang: targetLanguage.value }) });
+    const response = await fetch(SUNBIRD_TRANSLATE_URL, { method: 'POST', headers: { Authorization: `Bearer ${SUNBIRD_API_TOKEN}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ text: document.querySelector('#source-text').value, source_language: sourceLanguage.value, target_language: targetLanguage.value }) });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
       const providerError = data.detail || data.message || data.error;
       const errorMessage = typeof providerError === 'string' ? providerError : JSON.stringify(providerError);
       throw new Error(errorMessage || `Translation request failed (${response.status}).`);
     }
-    const translatedText = data.translated_text || data.translation || data.text;
+    const translatedText = data.output?.translated_text;
     if (!translatedText) throw new Error('The translation service returned no translated text.');
     result.textContent = translatedText;
     details.textContent = '';
