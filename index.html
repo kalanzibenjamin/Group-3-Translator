@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Language Translator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header>
+        <div class="brand">
+          <img src="kyulogo.jpeg" alt="Kyambogo University logo" class="brand-logo" />
+          <span>Kyambogo Language Translator</span>
+        </div>
+        <p>Coursework language translation tool</p>
+      </header>
+
+      <form id="translation-form" class="translator">
+        <div class="language-row">
+          <label>From<select id="source-lang" name="sourceLang"><option value="en" selected>English</option><option value="lug">Luganda</option><option value="sw">Swahili</option><option value="yo">Yoruba</option><option value="tw">Twi</option><option value="fr">French</option><option value="ar">Arabic</option></select></label>
+          <button id="swap-languages" class="swap" type="button" aria-label="Swap languages">⇄</button>
+          <label>To<select id="target-lang" name="targetLang"><option value="lug" selected>Luganda</option><option value="sw">Swahili</option><option value="yo">Yoruba</option><option value="tw">Twi</option><option value="en">English</option><option value="fr">French</option><option value="ar">Arabic</option></select></label>
+        </div>
+
+        <div class="translation-grid">
+          <label class="panel"><span>Text to translate</span><textarea id="source-text" name="text" maxlength="5000" placeholder="Type or paste text here…" required></textarea></label>
+          <section class="panel result-panel" aria-labelledby="result-heading">
+            <span id="result-heading">Translation</span>
+            <p id="translated-text" class="placeholder">Your translation will appear here.</p>
+            <p id="translation-details" class="details" aria-live="polite"></p>
+          </section>
+        </div>
+
+        <div class="actions"><button id="translate-button" class="translate" type="submit">Translate</button></div>
+      </form>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
